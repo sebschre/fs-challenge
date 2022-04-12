@@ -1,0 +1,42 @@
+version: "3.9"
+
+volumes:
+  db_postgres_vol:
+
+services:
+
+  db:
+    image: postgres:13.2-alpine
+    volumes:
+      - db_postgres_vol:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOSTNAME=db
+      - POSTGRES_PORT=5432
+
+  backend:
+    build:
+      context: backend
+    # volumes:
+    #   - ./backend/django_backend:/app/django_backend
+    ports:
+      - 8000:8000
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_HOSTNAME=db
+      - POSTGRES_PORT=5432
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: ./frontend
+    # volumes:
+    #   - ./frontend/src:/app/src
+    ports:
+      - 4200:4200
+    depends_on:
+      - backend

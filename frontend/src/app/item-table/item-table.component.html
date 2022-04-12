@@ -1,0 +1,26 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col" sortable="city" (sort)="onSort($event)">City</th>
+      <th scope="col" sortable="start_date" (sort)="onSort($event)">
+        Start Date
+      </th>
+      <th scope="col" sortable="end_date" (sort)="onSort($event)">End Date</th>
+      <th scope="col" sortable="price" (sort)="onSort($event)">Price</th>
+      <th scope="col" sortable="status" (sort)="onSort($event)">Status</th>
+      <th scope="col" sortable="color" (sort)="onSort($event)">Color</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of tableItems">
+      <td>{{ item.city }}</td>
+      <td>{{ item.start_date | date }}</td>
+      <td>{{ item.end_date | date }}</td>
+      <td>{{ item.price | number }}</td>
+      <td>{{ item.status }}</td>
+      <td [style.background-color]="item.color">
+        {{ item.color }}
+      </td>
+    </tr>
+  </tbody>
+</table>
